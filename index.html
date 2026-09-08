@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo das Frações - Aprendizado Divertido</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🍕 Mundo das Frações 🍕</h1>
+                <p class="subtitle">Aprenda frações de forma divertida!</p>
+            </div>
+        </header>
+
+        <!-- Menu Principal -->
+        <div id="mainMenu" class="menu-container">
+            <div class="menu-box">
+                <h2>Escolha uma atividade:</h2>
+                <div class="menu-buttons">
+                    <button class="btn btn-large" onclick="startExplorer()">🎯 Explorador de Frações</button>
+                    <button class="btn btn-large" onclick="startComparison()">⚖️ Comparar Frações</button>
+                    <button class="btn btn-large" onclick="startIdentify()">🔍 Identificar Frações</button>
+                    <button class="btn btn-large" onclick="startAddition()">➕ Somar Frações</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explorador de Frações -->
+        <div id="explorer" class="activity-container hidden">
+            <button class="btn-back" onclick="backToMenu()">← Voltar</button>
+            <h2>Explorador de Frações</h2>
+            <p class="instructions">Mova os controles para explorar diferentes frações!</p>
+            
+            <div class="explorer-content">
+                <div class="fraction-display">
+                    <div class="fraction-visual" id="visualFraction">
+                        <!-- Será preenchido por JavaScript -->
+                    </div>
+                    <div class="fraction-info">
+                        <p class="fraction-text" id="fractionText">1/2</p>
+                        <p class="fraction-name" id="fractionName">Uma metade</p>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="numerator">Numerador (parte colorida):</label>
+                        <input type="range" id="numerator" min="1" max="8" value="1" 
+                               oninput="updateFraction()" class="slider">
+                        <span id="numeratorValue">1</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="denominator">Denominador (partes totais):</label>
+                        <input type="range" id="denominator" min="2" max="8" value="2" 
+                               oninput="updateFraction()" class="slider">
+                        <span id="denominatorValue">2</span>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>💡 Dica:</h3>
+                    <p><strong>Numerador:</strong> Número de partes coloridas</p>
+                    <p><strong>Denominador:</strong> Número total de partes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparação de Frações -->
+        <div id="comparison" class="activity-container hidden">
+            <button class="btn-back" onclick="backToMenu()">← Voltar</button>
+            <h2>Comparar Frações</h2>
+            <p class="instructions">Qual fração é maior? Clique na resposta correta!</p>
+            
+            <div class="comparison-content">
+                <div class="fractions-comparison">
+                    <div class="fraction-card" id="fractionCard1" onclick="checkComparison(1)">
+                        <div class="fraction-visual-small" id="visualFraction1"></div>
+                        <p class="fraction-text" id="fractionText1">1/2</p>
+                    </div>
+
+                    <div class="comparison-symbol">
+                        <p id="comparisonSymbol">?</p>
+                    </div>
+
+                    <div class="fraction-card" id="fractionCard2" onclick="checkComparison(2)">
+                        <div class="fraction-visual-small" id="visualFraction2"></div>
+                        <p class="fraction-text" id="fractionText2">1/4</p>
+                    </div>
+                </div>
+
+                <div id="comparisonResult" class="result-box hidden"></div>
+                
+                <button class="btn" onclick="generateComparison()">Próxima Comparação</button>
+            </div>
+        </div>
+
+        <!-- Identificar Frações -->
+        <div id="identify" class="activity-container hidden">
+            <button class="btn-back" onclick="backToMenu()">← Voltar</button>
+            <h2>Identificar Frações</h2>
+            <p class="instructions">Que fração está representada? Escolha a resposta correta!</p>
+            
+            <div class="identify-content">
+                <div class="fraction-display">
+                    <div class="fraction-visual-large" id="visualFractionIdentify"></div>
+                </div>
+
+                <div class="options-grid">
+                    <button class="option-btn" id="option1" onclick="checkIdentify(1)"></button>
+                    <button class="option-btn" id="option2" onclick="checkIdentify(2)"></button>
+                    <button class="option-btn" id="option3" onclick="checkIdentify(3)"></button>
+                    <button class="option-btn" id="option4" onclick="checkIdentify(4)"></button>
+                </div>
+
+                <div id="identifyResult" class="result-box hidden"></div>
+                
+                <button class="btn" onclick="generateIdentify()">Próxima Questão</button>
+            </div>
+        </div>
+
+        <!-- Somar Frações -->
+        <div id="addition" class="activity-container hidden">
+            <button class="btn-back" onclick="backToMenu()">← Voltar</button>
+            <h2>Somar Frações</h2>
+            <p class="instructions">Qual é a soma? Escolha a resposta correta!</p>
+            
+            <div class="addition-content">
+                <div class="fractions-addition">
+                    <div class="fraction-visual" id="visualFraction1Add"></div>
+                    <div class="plus-symbol">+</div>
+                    <div class="fraction-visual" id="visualFraction2Add"></div>
+                    <div class="equals-symbol">=</div>
+                    <div class="question-mark">?</div>
+                </div>
+
+                <p class="addition-text" id="additionText">1/4 + 1/4 = ?</p>
+
+                <div class="options-grid">
+                    <button class="option-btn" id="addOption1" onclick="checkAddition(1)"></button>
+                    <button class="option-btn" id="addOption2" onclick="checkAddition(2)"></button>
+                    <button class="option-btn" id="addOption3" onclick="checkAddition(3)"></button>
+                    <button class="option-btn" id="addOption4" onclick="checkAddition(4)"></button>
+                </div>
+
+                <div id="additionResult" class="result-box hidden"></div>
+                
+                <button class="btn" onclick="generateAddition()">Próxima Questão</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
